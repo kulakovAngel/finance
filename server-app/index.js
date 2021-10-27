@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
-const finances = [];
+import {financeController} from './controller/finance.js';
 
 const app = express();
 
@@ -9,18 +10,10 @@ app.use(cors({
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200,
 }));
-
 app.use(express.json());
 
-app.get('/', (request, response, next) => {
-    console.log(request.url);
-    response.send('Hello, finance app!');
-});
-
-app.post('/', (request, response, next) => {
-    finances.push(request.body);
-    console.log(finances);
-    response.json(finances);
-});
+app.use(financeController);
 
 app.listen(5000);
+
+mongoose.connect('mongodb+srv://finance:finance@cluster0.zgbub.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');

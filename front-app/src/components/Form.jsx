@@ -2,14 +2,21 @@ import {useState} from 'react';
 
 export const Form = () => {
     const [formData, setFormData] = useState({
-        money: '0',
-        isCome: 'false',
+        money: 0,
+        isCome: false,
     });
 
-    const handleChange = event => {
+    const handleChangeMoney = event => {
         setFormData({
             ...formData,
-            [event.target.name]: event.target.value,
+            [event.target.name]: +event.target.value,
+        });
+    };
+
+    const handleChangeRadio = event => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value === 'true',
         });
     };
 
@@ -36,8 +43,8 @@ export const Form = () => {
                     type={'number'}
                     name={'money'}
                     id={'money'}
-                    value={formData.money}
-                    onChange={handleChange}
+                    value={'' + formData.money}
+                    onChange={handleChangeMoney}
                 />
             </div>
             <div>
@@ -47,7 +54,8 @@ export const Form = () => {
                     name={'isCome'}
                     id={'true'}
                     value={'true'}
-                    onChange={handleChange}
+                    checked={formData.isCome}
+                    onChange={handleChangeRadio}
                 />
             </div>
             <div>
@@ -57,7 +65,8 @@ export const Form = () => {
                     name={'isCome'}
                     id={'false'}
                     value={'false'}
-                    onChange={handleChange}
+                    checked={!formData.isCome}
+                    onChange={handleChangeRadio}
                 />
             </div>
 
