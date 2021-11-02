@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
+import {db} from './dataBase.js';
 
 import {financeController} from './controller/finance.js';
 
@@ -14,6 +14,9 @@ app.use(express.json());
 
 app.use(financeController);
 
-app.listen(5000);
+app.use(async (err, req, res, next) => {
+    console.error(err.message);
+    res.status(err.status).send(err.message + '!');
+});
 
-mongoose.connect('mongodb+srv://finance:finance@cluster0.zgbub.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+app.listen(5000);

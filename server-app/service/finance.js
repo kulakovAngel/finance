@@ -1,16 +1,18 @@
-import {Finances} from '../model/finance.js';
+import {finances} from '../model/finance.js';
+import {ValidateError, ServerError} from '../Errors.js';
 
 export const financeService = async ({money, isCome}) => {
 
     if (typeof money !== 'number' || typeof isCome !== 'boolean') {
-        return next(new Error('Incorrect data format!'));
+        throw new ValidateError();
     }
 
-    // todo: remove mongoose call from service
-    const newItem = await Finances.create({
+    const mongoResponse = await finances.create({
         money: money,
         isCome: isCome,
+    }).catch(() => {
+        throw new ServerError('Data Base error');
     });
-    console.log(newItem);
-    return newItem;
+
+    return mongoResponse;
 };

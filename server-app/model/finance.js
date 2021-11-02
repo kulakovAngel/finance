@@ -1,6 +1,10 @@
-import mongoose from "mongoose";
+import {db} from '../dataBase.js';
+import {Model} from './BaseModel.js';
 
-export const Finances = mongoose.model('Finances', {
-    money: Number,
-    isCome: Boolean,
-});
+class Finances extends Model {
+    constructor(dataBase) {
+        super(dataBase, 'money');
+    }
+}
+
+export const finances = new Finances(db);
