@@ -6,4 +6,8 @@ export class Model {
     async create(item) {
         return await this.collection.insertOne(item);
     }
+
+    async getAll() {
+        return await this.collection.find({}).toArray();
+    }
 }

@@ -1,6 +1,7 @@
 import {useState} from 'react';
+import {MONEY_ROUTE} from '../consts';
 
-export const Form = () => {
+export const Form = ({setMoneyList}) => {
     const [formData, setFormData] = useState({
         money: 0,
         isCome: false,
@@ -22,7 +23,7 @@ export const Form = () => {
 
     const handleAddMoney = event => {
         event.preventDefault();
-        fetch('http://localhost:5000', {
+        fetch(MONEY_ROUTE, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,9 +31,8 @@ export const Form = () => {
             body: JSON.stringify(formData)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => setMoneyList(data))
             .catch(error => console.log(error));
-        console.log(formData);
     };
 
     return (
